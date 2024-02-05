@@ -176,3 +176,59 @@ const backwardsPrime = function generatePrimes(start, stop) {
 
   return primes;
 };
+
+// https://www.codewars.com/kata/52fb87703c1351ebd200081f/train/javascript
+// * 6 kyu
+
+const whatCentury = function defineCentury(year) {
+  const century = Math.floor((year - 1) / 100) + 1;
+  const lastDigit = String(century).at(-1);
+  const end = century < 21 ? 'th' : lastDigit === '1' ? 'st' : lastDigit === '2' ? 'nd' : lastDigit === '3' ? 'rd' : 'th';
+  return `${century}${end}`;
+};
+
+// https://www.codewars.com/kata/5254bd1357d59fbbe90001ec/train/javascript
+// * 6 kyu
+
+const getScore = (n) => n === 1 ? 50 : getScore(n - 1) + 50 * n;
+
+// https://www.codewars.com/kata/58e16de3a312d34d000000bd/train/javascript
+// * 6 kyu
+
+const rankings = function setRank(arr) {
+  const rankMap = new Map([...arr].sort((a, b) => b - a).map((num, i) => [num, i + 1]));
+  return arr.map((num) => rankMap.get(num));
+};
+
+// https://www.codewars.com/kata/5ae71f8c2c5061059e000044/train/javascript
+// * 6 kyu
+
+const findX = function findNumber(n) {
+  const findSum = (m) => {
+    let sum = 0;
+    for (let i = 0; i <= m; i += 1) {
+      sum += i;
+    }
+    return sum;
+  };
+  return n * (findSum(2 * n - 1) + findSum(n - 1) * 2);
+};
+
+// https://www.codewars.com/kata/59c3e819d751df54e9000098/train/javascript
+// * 6 kyu
+
+const getConsectiveItems = function calcConsectiveItems(items, key) {
+  let result = 0;
+  const regExp = new RegExp(`(${key})\\1*`, 'g');
+  String(items).replace(regExp, (str) => (result = Math.max(result, str.length)));
+  return result;
+};
+
+// https://www.codewars.com/kata/5ad1e412cc2be1dbfb000016/train/javascript
+// * 6 kyu
+
+const insertMissingLetters = function insertLetters(str) {
+  const alphabet = new Array(26).fill(0).map((_, i) => String.fromCodePoint(i + 97));
+  const missingLetters = alphabet.map((letter) => (!str.includes(letter) ? letter : ''));
+  return str.split('').map((letter, i, arr) => i === arr.indexOf(letter) ? `${letter}${missingLetters.slice(alphabet.indexOf(letter)).join('').toUpperCase()}` : letter).join('');
+};
