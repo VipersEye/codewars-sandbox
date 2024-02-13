@@ -232,3 +232,125 @@ const insertMissingLetters = function insertLetters(str) {
   const missingLetters = alphabet.map((letter) => (!str.includes(letter) ? letter : ''));
   return str.split('').map((letter, i, arr) => i === arr.indexOf(letter) ? `${letter}${missingLetters.slice(alphabet.indexOf(letter)).join('').toUpperCase()}` : letter).join('');
 };
+
+// https://www.codewars.com/kata/60a1aac7d5a5fc0046c89651/train/javascript
+// * 6 kyu
+
+const lastSurvivors = function findDuplicateLetters(str) {
+  const alphabet = new Array(26).fill(0).map((_, i) => String.fromCodePoint(i + 97));
+  while (/([a-z]).*\1/g.test(str)) {
+    str = str.replace(/([a-z]).*\1/, (letters) => alphabet[(alphabet.indexOf(letters[0]) + 1) % 26] + letters.slice(1,-1));
+  }
+  return str;
+};
+
+// https://www.codewars.com/kata/587309155cfd6b9fb60000a0/train/javascript
+// * 6 kyu
+
+const money_value = (s) => parseFloat(s.replace(/[$,\s]/g, '')) || 0;
+
+// https://www.codewars.com/kata/5886d65e427c27afeb0000c1/train/javascript
+// * 6 kyu
+
+const squareDigitsSequence = function findSequence(a0) {
+  let n = 1;
+  for (let visited = new Set([a0]), an = a0; ; n += 1) {
+    an = String(an).split('').reduce((sum, num) => num ** 2 + sum, 0);
+    if (visited.has(an)) break;
+    visited.add(an);
+  }
+  return n + 1;
+};
+
+// https://www.codewars.com/kata/585cf93f6ad5e0d9bf000010/train/javascript
+// * 6 kyu
+
+const bowlingPins = (arr) => ['7 8 9 0', ' 4 5 6 ', '  2 3  ', '   1   '].map((item) => arr.length !== 0 ? item.replace(new RegExp(`${arr.map((item) => item === 10 ? 0 : item).join('|')}`, 'g'), ' ') : item).map((item) => item.replace(/[0-9]+/g, 'I')) .join('\n');
+
+// https://www.codewars.com/kata/59f44c7bd4b36946fd000052/train/javascript
+// * 6 kyu
+
+const hist = function createHistogram(s) {
+  const errors = 
+    s.split('')
+    .filter((letter) => 'uwxz'.includes(letter))
+    .reduce((res, letter) => {
+      if (!(letter in res)) res[letter] = 0;
+      res[letter] += 1;
+      return res;
+    }, {});
+  return Object.entries(errors)
+    .sort(([type1],[type2]) => type1 < type2 ? -1 : 1)
+    .map(([error, quantity]) => `${error}  ${quantity}${' '.repeat(6 - String(quantity).length)}${'*'.repeat(quantity)}`)
+    .join('\r');
+};
+
+// https://www.codewars.com/kata/5819081d056d4bdd410004f8/train/javascript
+// * 6 kyu
+
+const countIf = (node, p) => (node?.data ? Number(p(node.data)) : 0) + (node?.next ? countIf(node.next, p) : 0);
+
+// https://www.codewars.com/kata/583d10c03f02f41462000137/train/javascript
+// * 6 kyu
+
+const maxSum = (arr, range) => Math.max(...range.map(([start, end]) => arr.slice(start, end + 1).reduce((sum, item) => sum + item, 0)));
+
+// https://www.codewars.com/kata/58cda88814e65627c5000045/train/javascript
+// * 6 kyu
+
+const expandedForm = function writeNumber(num) {
+  const [int, float] = String(num).split('.');
+  return `${int
+    .split('')
+    .map((d, i) => (+d === 0 ? '' : `${d}${'0'.repeat(int.length - i - 1)}`))
+    .filter((d) => +d !== 0)
+    .concat(
+      float.map((d, i) => (+d === 0 ? '' : `${d}/${'1'.repeat(i + 1)}`))
+    )
+    .join(' + ')
+  }`;
+};
+
+// https://www.codewars.com/kata/55031bba8cba40ada90011c4/train/javascript
+// * 6 kyu
+
+const isSumOfCubes = function findCubicNumbers(str) {
+  const numbers = [...str.matchAll(/\d{1,3}/g)].map(([num]) => num).map((num) => +num).filter((num) => [...String(num)].reduce((sum, d) => sum + (+d) ** 3, 0) === +num);
+  const numbersSum = numbers.length === 0 ? null : numbers.reduce((sum, num) => sum + +num, 0);
+  return numbers.length === 0 ? 'Unlucky' : `${numbers.join(' ')} ${numbersSum} Lucky`;
+};
+
+// https://www.codewars.com/kata/58e09234ca6895c7b300008c/train/javascript
+// * 6 kyu
+
+const palindrome = function findPalindromeNumbers(num, s) {
+  if (typeof num !== 'number' || typeof s !== 'number' || num < 0) return 'Not valid';
+  const numbers = [];
+  for (let i = num < 10 ? 10 : num; numbers.length !== s; i += 1) {
+    const numLength = String(i).length;
+    if (String(i).slice(0, Math.ceil(numLength / 2)) === String(i).slice(Math.floor(numLength / 2)).split('').reverse().join('')) numbers.push(i);
+  }
+  return numbers;
+};
+
+// https://www.codewars.com/kata/5a626fc7fd56cb63c300008c/train/javascript
+// * 6 kyu
+
+const uncollapse = (digits) => digits.replace(/zero|one|two|three|four|five|six|seven|eight|nine/g, (str) => ` ${str} `).replace(/\s\s/g, ' ').trim();
+
+// https://www.codewars.com/kata/55d17ddd6d7868493e000074/train/javascript
+// * 7 kyu
+
+function Node(data) {
+  this.data = data;
+  this.next = null;
+}
+
+function append(listA, listB) {
+  if (listA === null && listB === null) return null;
+  const head = listA ?? listB;
+  let listTail;
+  for (listTail = head; listTail.next !== null; listTail = listTail.next) {}
+  listTail.next = head === listA ? listB : listA;
+  return head;
+}
